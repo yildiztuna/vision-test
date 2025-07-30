@@ -2,16 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Test Trap Button</title>
+  <title>Vision Bot Trap Test</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
+      position: relative;
     }
 
     #real-cta {
@@ -28,12 +30,12 @@
 
     .trap-overlay {
       position: absolute;
-      width: 180px;
+      width: 200px;
       height: 60px;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: rgba(0,0,0,0.01);
+      background: rgba(0,0,0,0.01); /* barely visible */
       z-index: 2;
       cursor: pointer;
     }
@@ -49,20 +51,28 @@
 <body>
 
   <button id="real-cta">Start Free Trial</button>
-  <div class="trap-overlay"></div>
+  <div class="trap-overlay" aria-hidden="true"></div>
   <div id="message">✅ Success! Button Clicked.</div>
 
   <script>
-    const realCTA = document.getElementById('real-cta');
+    const trap = document.querySelector('.trap-overlay');
+    const button = document.getElementById('real-cta');
     const message = document.getElementById('message');
 
-    realCTA.addEventListener('click', () => {
-      message.style.display = 'block';
+    let trapClickedOnce = false;
+
+    // Trap logs click but doesn't forward action
+    trap.addEventListener('click', () => {
+      console.log('🔥 Trap clicked!');
+      trapClickedOnce = true;
+      // Optional: fade trap after first click
+      trap.style.display = 'none';
     });
 
-    document.querySelector('.trap-overlay').addEventListener('click', () => {
-      console.log('🔥 Trap clicked!');
-      realCTA.click(); // forward click to real button
+    // Only the real button shows success
+    button.addEventListener('click', () => {
+      console.log('✅ Human reached the real button');
+      message.style.display = 'block';
     });
   </script>
 
