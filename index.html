@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Trap Button</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    #real-cta {
+      background: #4CAF50;
+      color: white;
+      padding: 16px 32px;
+      font-size: 18px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+    }
+
+    .trap-overlay {
+      position: absolute;
+      width: 180px;
+      height: 60px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.01);
+      z-index: 2;
+      cursor: pointer;
+    }
+
+    #message {
+      margin-top: 40px;
+      font-size: 20px;
+      color: green;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="real-cta">Start Free Trial</button>
+  <div class="trap-overlay"></div>
+  <div id="message">✅ Success! Button Clicked.</div>
+
+  <script>
+    const realCTA = document.getElementById('real-cta');
+    const message = document.getElementById('message');
+
+    realCTA.addEventListener('click', () => {
+      message.style.display = 'block';
+    });
+
+    document.querySelector('.trap-overlay').addEventListener('click', () => {
+      console.log('🔥 Trap clicked!');
+      realCTA.click(); // forward click to real button
+    });
+  </script>
+
+</body>
+</html>
